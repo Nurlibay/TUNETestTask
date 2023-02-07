@@ -17,8 +17,8 @@
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/btn_back"
-            android:layout_width="36dp"
-            android:layout_height="36dp"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
             android:layout_marginStart="@dimen/margin_middle"
             android:layout_marginEnd="@dimen/margin_middle"
             android:clickable="true"
@@ -34,8 +34,8 @@
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/btn_add"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
+            android:layout_width="44dp"
+            android:layout_height="44dp"
             android:layout_marginEnd="@dimen/margin_middle"
             android:clickable="true"
             android:focusable="true"
@@ -52,7 +52,7 @@
             android:id="@+id/tv_rf_cards"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="@dimen/margin_middle"
+            android:layout_marginEnd="@dimen/margin_standard"
             android:text="@string/rf_cards"
             android:textColor="@color/link_color"
             android:textSize="18sp"
@@ -97,7 +97,7 @@
         <com.google.android.material.card.MaterialCardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:cardCornerRadius="12dp"
+            app:cardCornerRadius="@dimen/margin_standard"
             app:cardElevation="@dimen/margin_standard"
             app:cardUseCompatPadding="true">
 
@@ -122,6 +122,7 @@
                     android:drawableEnd="@drawable/ic_qr_code_scanner"
                     android:hint="0000 0000 0000 0000"
                     android:padding="@dimen/margin_standard"
+                    android:inputType="number"
                     android:textColor="@color/link_color"
                     android:textCursorDrawable="@null" />
 
@@ -133,12 +134,13 @@
                     android:textSize="16sp" />
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:layout_width="match_parent"
+                    android:layout_width="160dp"
                     android:layout_height="wrap_content"
                     android:layout_marginVertical="@dimen/margin_middle"
                     android:background="@drawable/et_style"
                     android:hint="MM/YY"
                     android:padding="@dimen/margin_standard"
+                    android:inputType="number"
                     android:textColor="@color/link_color"
                     android:textCursorDrawable="@null" />
 
