@@ -7,4 +7,6 @@
     <string name="enter_card_info">Enter card info</string>
     <string name="card_number">Card number</string>
     <string name="expiry_date">Expiry date</string>
+    <string name="card_name">ALOQABANK</string>
+    <string name="main_card">Main Card</string>
 </resources>
