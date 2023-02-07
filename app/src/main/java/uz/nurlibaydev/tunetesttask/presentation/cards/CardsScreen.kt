@@ -6,6 +6,8 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import by.kirich1409.viewbindingdelegate.viewBinding
+import com.google.android.material.tabs.TabLayout
+import com.google.android.material.tabs.TabLayoutMediator
 import dagger.hilt.android.AndroidEntryPoint
 import uz.nurlibaydev.tunetesttask.R
 import uz.nurlibaydev.tunetesttask.databinding.ScreenCardsBinding
@@ -27,6 +29,12 @@ class CardsScreen : Fragment(R.layout.screen_cards) {
             btnAdd.onClick {
                 navController.navigate(CardsScreenDirections.actionCardsScreenToAddCardScreen())
             }
+
+            val list = listOf("All", "Favourites", "UzCard", "Humo", "International Cards", "Atto")
+            viewPager.adapter = CardsViewPagerAdapter(requireActivity(), list)
+            TabLayoutMediator(tabLayout, viewPager) { tab, pos ->
+                tab.text = list[pos]
+            }.attach()
         }
     }
 }
