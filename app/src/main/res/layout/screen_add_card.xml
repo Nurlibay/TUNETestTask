@@ -118,7 +118,6 @@
                     android:id="@+id/edit_text_card_number"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:singleLine="true"
                     android:layout_marginVertical="@dimen/margin_middle"
                     android:background="@drawable/et_style"
                     android:drawableEnd="@drawable/ic_qr_code_scanner"
@@ -126,6 +125,7 @@
                     android:importantForAutofill="no"
                     android:inputType="phone"
                     android:padding="@dimen/margin_standard"
+                    android:singleLine="true"
                     android:textColor="@color/link_color"
                     android:textCursorDrawable="@null"
                     tools:ignore="LabelFor,NegativeMargin" />
@@ -144,10 +144,10 @@
                     android:layout_marginVertical="@dimen/margin_middle"
                     android:background="@drawable/et_style"
                     android:hint="MM/YY"
-                    android:singleLine="true"
                     android:importantForAutofill="no"
                     android:inputType="date"
                     android:padding="@dimen/margin_standard"
+                    android:singleLine="true"
                     android:textColor="@color/link_color"
                     android:textCursorDrawable="@null"
                     tools:ignore="LabelFor,NegativeMargin" />
@@ -159,6 +159,7 @@
     </androidx.appcompat.widget.LinearLayoutCompat>
 
     <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_continue"
         android:layout_width="match_parent"
         android:layout_height="64dp"
         android:layout_margin="@dimen/margin_standard"
@@ -170,5 +171,15 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
+
+    <ProgressBar
+        android:id="@+id/progress_bar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

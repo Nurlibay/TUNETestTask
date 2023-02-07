@@ -9,4 +9,5 @@ interface MainRepository {
 
     fun getAllCardName(): Flow<UiState<List<Card>>>
     fun getCardList(id: String, name: String): Flow<UiState<List<CardDetail>>>
+    fun addCard(name: String, cardNumber: String, date: String): Flow<UiState<String>>
 }

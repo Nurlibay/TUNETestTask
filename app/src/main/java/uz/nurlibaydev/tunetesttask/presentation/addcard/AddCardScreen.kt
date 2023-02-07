@@ -4,13 +4,17 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
-import androidx.core.widget.doOnTextChanged
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import butterknife.ButterKnife
 import by.kirich1409.viewbindingdelegate.viewBinding
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 import uz.nurlibaydev.tunetesttask.R
 import uz.nurlibaydev.tunetesttask.databinding.ScreenAddCardBinding
 import uz.nurlibaydev.tunetesttask.utils.Constants.CARD_DATE_DIVIDER
@@ -23,7 +27,9 @@ import uz.nurlibaydev.tunetesttask.utils.Constants.CARD_NUMBER_DIVIDER_MODULO
 import uz.nurlibaydev.tunetesttask.utils.Constants.CARD_NUMBER_DIVIDER_POSITION
 import uz.nurlibaydev.tunetesttask.utils.Constants.CARD_NUMBER_TOTAL_DIGITS
 import uz.nurlibaydev.tunetesttask.utils.Constants.CARD_NUMBER_TOTAL_SYMBOLS
+import uz.nurlibaydev.tunetesttask.utils.UiState
 import uz.nurlibaydev.tunetesttask.utils.extensions.onClick
+import uz.nurlibaydev.tunetesttask.utils.extensions.showMessage
 
 /**
  *  Created by Nurlibay Koshkinbaev on 07/02/2023 15:43
@@ -34,6 +40,7 @@ open class AddCardScreen : Fragment(R.layout.screen_add_card) {
 
     private val binding: ScreenAddCardBinding by viewBinding()
     private val navController: NavController by lazy(LazyThreadSafetyMode.NONE) { findNavController() }
+    private val viewModel: AddCardViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -45,6 +52,21 @@ open class AddCardScreen : Fragment(R.layout.screen_add_card) {
         binding.apply {
             btnBack.onClick {
                 navController.popBackStack()
+            }
+
+            btnContinue.onClick {
+                if(editTextCardNumber.text.toString().contains("9860")){
+                    viewModel.addCard("Humo", editTextCardNumber.text.toString(), editTextDate.text.toString())
+                    setupObserver()
+                }
+                if(editTextCardNumber.text.toString().contains("8600")){
+                    viewModel.addCard("UzCard", editTextCardNumber.text.toString(), editTextDate.text.toString())
+                    setupObserver()
+                }
+                if(editTextCardNumber.text.toString().contains("4278")){
+                    viewModel.addCard("VISA", editTextCardNumber.text.toString(), editTextDate.text.toString())
+                    setupObserver()
+                }
             }
 
             editTextCardNumber.addTextChangedListener(object : TextWatcher {
@@ -67,6 +89,39 @@ open class AddCardScreen : Fragment(R.layout.screen_add_card) {
                 }
             })
         }
+    }
+
+    private fun setupObserver() {
+        lifecycleScope.launch {
+            viewModel.addCard.collectLatest {
+                when (it) {
+                    is UiState.Loading -> {
+                        loading(true)
+                    }
+                    is UiState.NetworkError -> {
+                        loading(false)
+                        showMessage(it.msg)
+                    }
+                    is UiState.Error -> {
+                        loading(false)
+                        showMessage(it.msg)
+                    }
+                    is UiState.Success -> {
+                        loading(false)
+                        showMessage(it.data)
+                        navController.popBackStack()
+                    }
+                    else -> {
+                        loading(false)
+                        showMessage("Unknown error")
+                    }
+                }
+            }
+        }
+    }
+
+    private fun loading(b: Boolean) {
+        binding.progressBar.isVisible = b
     }
 
     private fun isInputCorrect(s: Editable, size: Int, dividerPosition: Int, divider: Char): Boolean {
