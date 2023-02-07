@@ -7,4 +7,8 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+
+    <!-- Manual added colors -->
+    <color name="status_bar_color">#EDEEF0</color>
+
 </resources>
