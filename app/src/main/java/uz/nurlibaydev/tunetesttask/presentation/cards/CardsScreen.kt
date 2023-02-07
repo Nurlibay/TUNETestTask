@@ -61,9 +61,13 @@ class CardsScreen : Fragment(R.layout.screen_cards) {
                     }
                     is UiState.Success -> {
                         loading(false)
+                        val cards = mutableListOf<String>()
+                        it.data.forEach { card ->
+                            cards.add(card.name)
+                        }
                         binding.viewPager.adapter = CardsViewPagerAdapter(requireActivity(), it.data)
                         TabLayoutMediator(binding.tabLayout, binding.viewPager) { tab, pos ->
-                            tab.text = it.data[pos]
+                            tab.text = it.data[pos].name
                         }.attach()
                     }
                     else -> {

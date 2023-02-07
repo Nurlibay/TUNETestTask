@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="@dimen/margin_middle"
-    android:padding="@dimen/margin_standard"
-    android:background="@drawable/card_shape">
+    android:background="@drawable/card_shape"
+    android:padding="@dimen/margin_standard">
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/tv_bank_name"
@@ -18,10 +19,12 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/tv_is_main"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/main_card"
         android:textColor="@color/white"
+        android:visibility="invisible"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -29,48 +32,50 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
+        android:background="@drawable/card_info_shape"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tv_bank_name">
 
         <androidx.appcompat.widget.LinearLayoutCompat
             android:id="@+id/card_detail"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/card_info_shape"
             android:orientation="vertical"
-            android:padding="@dimen/margin_standard"
+            android:layout_marginStart="@dimen/margin_small"
+            android:padding="@dimen/margin_middle"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent">
 
             <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/tv_total_sum"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="303 860.12 UZS"
                 android:textColor="@color/white"
-                android:textSize="24sp"
+                android:textSize="22sp"
+                android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="303 860.12 UZS" />
 
             <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/tv_card_number"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/white"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="9860 19** **** 0580" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/tv_card_owner"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginVertical="@dimen/margin_small"
-                android:text="9860 19** **** 0580"
                 android:textColor="@color/white"
-                android:textSize="18sp"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <com.google.android.material.textview.MaterialTextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginVertical="@dimen/margin_small"
-                android:text="NURLIBAY KOSHKINBAEV"
-                android:textColor="@color/white"
-                android:textSize="18sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="NURLIBAY KOSHKINBAEV" />
 
         </androidx.appcompat.widget.LinearLayoutCompat>
 
@@ -81,23 +86,24 @@
             android:layout_marginTop="@dimen/margin_middle"
             android:layout_marginEnd="@dimen/margin_middle"
             android:background="@drawable/brand_shape"
-            android:padding="2dp"
-            android:text="Humo"
+            android:padding="@dimen/margin_small"
             android:textColor="@color/black"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/card_detail"
+            tools:text="Humo" />
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/tv_expiry_date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="@dimen/margin_middle"
-            android:text="10/24"
             android:textColor="@color/white"
             android:textSize="18sp"
             app:layout_constraintBottom_toBottomOf="@id/card_detail"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@id/card_detail" />
+            app:layout_constraintTop_toTopOf="@id/card_detail"
+            tools:text="10/24" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

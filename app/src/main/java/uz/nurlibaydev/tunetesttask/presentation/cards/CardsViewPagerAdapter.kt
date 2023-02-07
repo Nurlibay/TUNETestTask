@@ -4,6 +4,7 @@ import android.os.Bundle
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.viewpager2.adapter.FragmentStateAdapter
+import uz.nurlibaydev.tunetesttask.data.models.Card
 import uz.nurlibaydev.tunetesttask.presentation.cards.card.CardScreen
 
 /**
@@ -12,7 +13,7 @@ import uz.nurlibaydev.tunetesttask.presentation.cards.card.CardScreen
 
 class CardsViewPagerAdapter(
     fa: FragmentActivity,
-    private val cards: List<String>
+    private val cards: List<Card>
 ): FragmentStateAdapter(fa) {
 
     override fun getItemCount(): Int = cards.size
@@ -20,7 +21,8 @@ class CardsViewPagerAdapter(
     override fun createFragment(position: Int): Fragment {
         val cardsScreen = CardScreen()
         val args = Bundle()
-        args.putString("title", cards[position])
+        args.putString("id", cards[position].id)
+        args.putString("name", cards[position].name)
         cardsScreen.arguments = args
         return cardsScreen
     }

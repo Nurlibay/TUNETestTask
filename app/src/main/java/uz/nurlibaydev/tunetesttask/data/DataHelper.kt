@@ -8,6 +8,7 @@ import kotlinx.coroutines.flow.callbackFlow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flowOn
 import uz.nurlibaydev.tunetesttask.data.models.Card
+import uz.nurlibaydev.tunetesttask.data.models.CardDetail
 import uz.nurlibaydev.tunetesttask.utils.Constants
 import uz.nurlibaydev.tunetesttask.utils.UiState
 import uz.nurlibaydev.tunetesttask.utils.hasConnection
@@ -20,18 +21,14 @@ class DataHelper(
     private val db: FirebaseFirestore,
 ) {
 
-    fun getAllCardNames(): Flow<UiState<List<String>>> = callbackFlow {
+    fun getAllCardNames(): Flow<UiState<List<Card>>> = callbackFlow {
         if (hasConnection()) {
             db.collection(Constants.CARDS).get()
                 .addOnSuccessListener {
                     val cardNames = it.documents.map { doc ->
                         doc.toObject(Card::class.java)!!
                     }
-                    val cards = mutableListOf<String>()
-                    cardNames.forEach { card ->
-                        cards.add(card.name)
-                    }
-                    trySend(UiState.Success(cards))
+                    trySend(UiState.Success(cardNames))
                 }
                 .addOnFailureListener {
                     trySend(UiState.Error(it.localizedMessage!!.toString()))
@@ -39,7 +36,27 @@ class DataHelper(
         } else {
             trySend(UiState.NetworkError("No internet connection!"))
         }
-        awaitClose {}
+        awaitClose { /* unregister listener here */ }
+    }.catch {
+        emit(UiState.Error(it.toString()))
+    }.flowOn(Dispatchers.IO)
+
+    fun getCardList(id: String, cardName: String): Flow<UiState<List<CardDetail>>> = callbackFlow {
+        if (hasConnection()) {
+            db.collection(Constants.CARDS).document(id).collection(cardName).get()
+                .addOnSuccessListener {
+                    val cardList = it.documents.map { doc ->
+                        doc.toObject(CardDetail::class.java)!!
+                    }
+                    trySend(UiState.Success(cardList))
+                }
+                .addOnFailureListener {
+                    trySend(UiState.Error(it.localizedMessage!!.toString()))
+                }
+        } else {
+            trySend(UiState.NetworkError("No internet connection!"))
+        }
+        awaitClose { /* unregister listener here */ }
     }.catch {
         emit(UiState.Error(it.toString()))
     }.flowOn(Dispatchers.IO)

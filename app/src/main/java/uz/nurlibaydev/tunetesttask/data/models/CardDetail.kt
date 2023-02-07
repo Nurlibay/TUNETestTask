@@ -10,7 +10,7 @@ data class CardDetail(
     val card_name: String = "",
     val card_number: String = "",
     val expiry_date: String = "",
-    val isMain: Boolean = false,
+    var isMain: Boolean = false,
     val owner_name: String = "",
     val total_summa: String = "500 000 UZS",
 )
