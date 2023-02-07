@@ -20,7 +20,7 @@ import uz.nurlibaydev.tunetesttask.utils.extensions.showMessage
  */
 
 @AndroidEntryPoint
-class CardScreen : Fragment(R.layout.screen_card) {
+open class CardScreen : Fragment(R.layout.screen_card) {
 
     private val binding: ScreenCardBinding by viewBinding()
     private val adapter by lazy { CardAdapter() }
@@ -66,4 +66,5 @@ class CardScreen : Fragment(R.layout.screen_card) {
     private fun loading(b: Boolean) {
         binding.progressBar.isVisible = b
     }
+
 }

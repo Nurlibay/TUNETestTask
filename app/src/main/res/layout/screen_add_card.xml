@@ -115,16 +115,20 @@
                     android:textSize="16sp" />
 
                 <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/edit_text_card_number"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:singleLine="true"
                     android:layout_marginVertical="@dimen/margin_middle"
                     android:background="@drawable/et_style"
                     android:drawableEnd="@drawable/ic_qr_code_scanner"
                     android:hint="0000 0000 0000 0000"
+                    android:importantForAutofill="no"
+                    android:inputType="phone"
                     android:padding="@dimen/margin_standard"
-                    android:inputType="number"
                     android:textColor="@color/link_color"
-                    android:textCursorDrawable="@null" />
+                    android:textCursorDrawable="@null"
+                    tools:ignore="LabelFor,NegativeMargin" />
 
                 <com.google.android.material.textview.MaterialTextView
                     android:layout_width="wrap_content"
@@ -134,15 +138,19 @@
                     android:textSize="16sp" />
 
                 <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/edit_text_date"
                     android:layout_width="160dp"
                     android:layout_height="wrap_content"
                     android:layout_marginVertical="@dimen/margin_middle"
                     android:background="@drawable/et_style"
                     android:hint="MM/YY"
+                    android:singleLine="true"
+                    android:importantForAutofill="no"
+                    android:inputType="date"
                     android:padding="@dimen/margin_standard"
-                    android:inputType="number"
                     android:textColor="@color/link_color"
-                    android:textCursorDrawable="@null" />
+                    android:textCursorDrawable="@null"
+                    tools:ignore="LabelFor,NegativeMargin" />
 
             </androidx.appcompat.widget.LinearLayoutCompat>
 
