@@ -12,7 +12,7 @@ class MainRepositoryImpl @Inject constructor(
     private val dataHelper: DataHelper
 ) : MainRepository {
 
-    override fun getAllCardName(): Flow<UiState<List<Card>>> {
+    override fun getAllCardName(): Flow<UiState<List<String>>> {
         return dataHelper.getAllCardNames()
     }
 }

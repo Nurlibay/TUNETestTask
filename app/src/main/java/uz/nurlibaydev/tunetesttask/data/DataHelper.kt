@@ -20,14 +20,18 @@ class DataHelper(
     private val db: FirebaseFirestore,
 ) {
 
-    fun getAllCardNames(): Flow<UiState<List<Card>>> = callbackFlow {
+    fun getAllCardNames(): Flow<UiState<List<String>>> = callbackFlow {
         if (hasConnection()) {
             db.collection(Constants.CARDS).get()
                 .addOnSuccessListener {
                     val cardNames = it.documents.map { doc ->
                         doc.toObject(Card::class.java)!!
                     }
-                    trySend(UiState.Success(cardNames))
+                    val cards = mutableListOf<String>()
+                    cardNames.forEach { card ->
+                        cards.add(card.name)
+                    }
+                    trySend(UiState.Success(cards))
                 }
                 .addOnFailureListener {
                     trySend(UiState.Error(it.localizedMessage!!.toString()))
