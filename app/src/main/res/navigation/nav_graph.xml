@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/cardsScreen">
+
+    <fragment
+        android:id="@+id/cardsScreen"
+        android:name="uz.nurlibaydev.tunetesttask.presentation.cards.CardsScreen"
+        android:label="CardsScreen"
+        tools:layout="@layout/screen_cards">
+        <action
+            android:id="@+id/action_cardsScreen_to_addCardScreen"
+            app:destination="@id/addCardScreen" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/addCardScreen"
+        android:name="uz.nurlibaydev.tunetesttask.presentation.addcard.AddCardScreen"
+        android:label="AddCardScreen"
+        tools:layout="@layout/screen_add_card" />
+
+</navigation>
