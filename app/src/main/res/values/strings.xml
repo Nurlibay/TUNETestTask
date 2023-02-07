@@ -1,4 +1,10 @@
 <resources>
     <string name="app_name">TUNETestTask</string>
     <string name="cards">Cards</string>
+    <string name="rf_cards">RF cards</string>
+    <string name="adding_card">Adding card</string>
+    <string name="tv_continue">Continue</string>
+    <string name="enter_card_info">Enter card info</string>
+    <string name="card_number">Card number</string>
+    <string name="expiry_date">Expiry date</string>
 </resources>

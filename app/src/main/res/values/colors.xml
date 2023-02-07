@@ -10,5 +10,8 @@
 
     <!-- Manual added colors -->
     <color name="status_bar_color">#EDEEF0</color>
+    <color name="link_color">#6B2AE6</color>
+    <color name="bg_add_card">#ECEDEF</color>
+    <color name="border_color">#E6E6E8</color>
 
 </resources>
