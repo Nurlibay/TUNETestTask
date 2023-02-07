@@ -1,7 +1,8 @@
-package uz.nurlibaydev.tunetesttask
+package uz.nurlibaydev.tunetesttask.presentation
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import uz.nurlibaydev.tunetesttask.R
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

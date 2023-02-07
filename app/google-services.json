@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "554368458252",
+    "project_id": "tunetesttask",
+    "storage_bucket": "tunetesttask.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:554368458252:android:18f18340fa7f512e0c1829",
+        "android_client_info": {
+          "package_name": "uz.nurlibaydev.tunetesttask"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "554368458252-ofrc4gapt5da489tionlonalgo0vqb04.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "uz.nurlibaydev.tunetesttask",
+            "certificate_hash": "135eac7a4c44bbb6746fffd4d32fc85f66793a84"
+          }
+        },
+        {
+          "client_id": "554368458252-2p45ekkefuttq3343doub8mndq7aoogh.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC_3G3s240chNEJ3yb14IXWuodmSV8LW9Y"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "554368458252-2p45ekkefuttq3343doub8mndq7aoogh.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
