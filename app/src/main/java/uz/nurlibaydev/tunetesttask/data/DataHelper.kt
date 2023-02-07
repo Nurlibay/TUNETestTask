@@ -81,7 +81,7 @@ class DataHelper(
                         )
                         db.collection(CARDS).document(doc.id).collection(cardName).add(cardDetail)
                             .addOnSuccessListener {
-                                trySend(UiState.Success("Success"))
+                                trySend(UiState.Success("Success. Please refresh page!"))
                             }
                             .addOnFailureListener { e ->
                                 trySend(UiState.Error(e.localizedMessage!!.toString()))

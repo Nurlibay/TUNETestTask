@@ -32,6 +32,10 @@ open class CardScreen : Fragment(R.layout.screen_card) {
         val cardName = requireArguments().getString("name")
         viewModel.getAllCardList(id, cardName)
         binding.rvCards.adapter = adapter
+        binding.swipeContainer.setOnRefreshListener {
+            viewModel.getAllCardList(id, cardName)
+            binding.swipeContainer.isRefreshing = false
+        }
         setupObserver()
     }
 
