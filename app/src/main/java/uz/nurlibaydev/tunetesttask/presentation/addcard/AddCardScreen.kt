@@ -63,7 +63,7 @@ class AddCardScreen : Fragment(R.layout.screen_add_card) {
 
             editTextCardNumber.addTextChangedListener {
                 cardNumberLiveData.value = it.toString()
-                cardDateLiveData.observe(viewLifecycleOwner){ cardDate ->
+                cardDateLiveData.observe(viewLifecycleOwner) { cardDate ->
                     if (it.toString().length == 19 && cardDate.length == 5) {
                         validCardNumber.value = true
                         if (validCardNumber.value!! && validCardDate.value!!) {
@@ -76,7 +76,7 @@ class AddCardScreen : Fragment(R.layout.screen_add_card) {
             }
             editTextDate.addTextChangedListener {
                 cardDateLiveData.value = it.toString()
-                cardNumberLiveData.observe(viewLifecycleOwner){ cardNumber ->
+                cardNumberLiveData.observe(viewLifecycleOwner) { cardNumber ->
                     if (it.toString().length == 5 && cardNumber.length == 19) {
                         validCardDate.value = true
                         if (validCardNumber.value!! && validCardDate.value!!) {

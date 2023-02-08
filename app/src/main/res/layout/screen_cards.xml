@@ -90,6 +90,7 @@
         app:tabTextAppearance="@style/TabLayoutTextStyle"
         app:tabIndicatorColor="@color/link_color"
         app:tabMode="scrollable"
+        app:tabIndicatorHeight="4dp"
         app:tabSelectedTextColor="@color/black"
         app:tabTextColor="@color/black" />
 
