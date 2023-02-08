@@ -5,8 +5,10 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
 import androidx.core.view.isVisible
+import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
@@ -36,11 +38,16 @@ import uz.nurlibaydev.tunetesttask.utils.extensions.showMessage
  */
 
 @AndroidEntryPoint
-open class AddCardScreen : Fragment(R.layout.screen_add_card) {
+class AddCardScreen : Fragment(R.layout.screen_add_card) {
 
     private val binding: ScreenAddCardBinding by viewBinding()
     private val navController: NavController by lazy(LazyThreadSafetyMode.NONE) { findNavController() }
     private val viewModel: AddCardViewModel by viewModels()
+    private val liveData: MutableLiveData<Boolean> = MutableLiveData(false)
+    private val validCardNumber: MutableLiveData<Boolean> = MutableLiveData(false)
+    private val validCardDate: MutableLiveData<Boolean> = MutableLiveData(false)
+    private val cardNumberLiveData: MutableLiveData<String> = MutableLiveData("")
+    private val cardDateLiveData: MutableLiveData<String> = MutableLiveData("")
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -54,17 +61,49 @@ open class AddCardScreen : Fragment(R.layout.screen_add_card) {
                 navController.popBackStack()
             }
 
+            editTextCardNumber.addTextChangedListener {
+                cardNumberLiveData.value = it.toString()
+                cardDateLiveData.observe(viewLifecycleOwner){ cardDate ->
+                    if (it.toString().length == 19 && cardDate.length == 5) {
+                        validCardNumber.value = true
+                        if (validCardNumber.value!! && validCardDate.value!!) {
+                            liveData.value = true
+                        }
+                    } else {
+                        liveData.value = false
+                    }
+                }
+            }
+            editTextDate.addTextChangedListener {
+                cardDateLiveData.value = it.toString()
+                cardNumberLiveData.observe(viewLifecycleOwner){ cardNumber ->
+                    if (it.toString().length == 5 && cardNumber.length == 19) {
+                        validCardDate.value = true
+                        if (validCardNumber.value!! && validCardDate.value!!) {
+                            liveData.value = true
+                        }
+                    } else {
+                        liveData.value = false
+                    }
+                }
+            }
+
+            liveData.observe(viewLifecycleOwner) {
+                btnContinue.isEnabled = it
+            }
+
             btnContinue.onClick {
-                if(editTextCardNumber.text.toString().contains("9860")){
-                    viewModel.addCard("Humo", editTextCardNumber.text.toString(), editTextDate.text.toString())
+                var fourDigit = ""
+                for (i in 0 until 4) fourDigit += cardNumberLiveData.value!![i]
+                if (fourDigit == "9860") {
+                    viewModel.addCard("Humo", cardNumberLiveData.value!!, cardDateLiveData.value!!)
                     setupObserver()
                 }
-                if(editTextCardNumber.text.toString().contains("8600")){
-                    viewModel.addCard("UzCard", editTextCardNumber.text.toString(), editTextDate.text.toString())
+                if (fourDigit == "8600") {
+                    viewModel.addCard("UzCard", cardNumberLiveData.value!!, cardDateLiveData.value!!)
                     setupObserver()
-                }
-                if(editTextCardNumber.text.toString().contains("4278")){
-                    viewModel.addCard("VISA", editTextCardNumber.text.toString(), editTextDate.text.toString())
+                } else {
+                    viewModel.addCard("VISA", cardNumberLiveData.value!!, cardDateLiveData.value!!)
                     setupObserver()
                 }
             }
@@ -74,7 +113,11 @@ open class AddCardScreen : Fragment(R.layout.screen_add_card) {
                 override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {}
                 override fun afterTextChanged(s: Editable) {
                     if (!isInputCorrect(s, CARD_NUMBER_TOTAL_SYMBOLS, CARD_NUMBER_DIVIDER_MODULO, CARD_NUMBER_DIVIDER)) {
-                        s.replace(0, s.length, concatString(getDigitArray(s, CARD_NUMBER_TOTAL_DIGITS), CARD_NUMBER_DIVIDER_POSITION, CARD_NUMBER_DIVIDER))
+                        s.replace(
+                            0,
+                            s.length,
+                            concatString(getDigitArray(s, CARD_NUMBER_TOTAL_DIGITS), CARD_NUMBER_DIVIDER_POSITION, CARD_NUMBER_DIVIDER)
+                        )
                     }
                 }
             })

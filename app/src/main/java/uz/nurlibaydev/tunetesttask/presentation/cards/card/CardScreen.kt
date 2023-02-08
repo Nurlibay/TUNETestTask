@@ -30,10 +30,22 @@ open class CardScreen : Fragment(R.layout.screen_card) {
         super.onViewCreated(view, savedInstanceState)
         val id = requireArguments().getString("id")
         val cardName = requireArguments().getString("name")
-        viewModel.getAllCardList(id, cardName)
+        if (cardName == "All") {
+            val cardNames = requireArguments().getStringArrayList("cards")
+            viewModel.getAllCardsData(cardNames!!)
+            setupObserverAllCardData()
+        } else {
+            viewModel.getAllCardList(id, cardName)
+        }
         binding.rvCards.adapter = adapter
         binding.swipeContainer.setOnRefreshListener {
-            viewModel.getAllCardList(id, cardName)
+            if (cardName == "All") {
+                val cardNames = requireArguments().getStringArrayList("cards")
+                viewModel.getAllCardsData(cardNames!!)
+                setupObserverAllCardData()
+            } else {
+                viewModel.getAllCardList(id, cardName)
+            }
             binding.swipeContainer.isRefreshing = false
         }
         setupObserver()
@@ -42,6 +54,34 @@ open class CardScreen : Fragment(R.layout.screen_card) {
     private fun setupObserver() {
         lifecycleScope.launch {
             viewModel.cardList.collectLatest {
+                when (it) {
+                    is UiState.Loading -> {
+                        loading(true)
+                    }
+                    is UiState.NetworkError -> {
+                        loading(false)
+                        showMessage(it.msg)
+                    }
+                    is UiState.Error -> {
+                        loading(false)
+                        showMessage(it.msg)
+                    }
+                    is UiState.Success -> {
+                        loading(false)
+                        adapter.submitList(it.data)
+                    }
+                    else -> {
+                        loading(false)
+                        showMessage("Unknown error")
+                    }
+                }
+            }
+        }
+    }
+
+    private fun setupObserverAllCardData() {
+        lifecycleScope.launch {
+            viewModel.allCards.collectLatest {
                 when (it) {
                     is UiState.Loading -> {
                         loading(true)

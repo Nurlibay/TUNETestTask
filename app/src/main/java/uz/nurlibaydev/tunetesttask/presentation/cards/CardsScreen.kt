@@ -1,6 +1,7 @@
 package uz.nurlibaydev.tunetesttask.presentation.cards
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
@@ -14,10 +15,13 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import uz.nurlibaydev.tunetesttask.R
+import uz.nurlibaydev.tunetesttask.data.models.Card
 import uz.nurlibaydev.tunetesttask.databinding.ScreenCardsBinding
 import uz.nurlibaydev.tunetesttask.utils.UiState
 import uz.nurlibaydev.tunetesttask.utils.extensions.onClick
 import uz.nurlibaydev.tunetesttask.utils.extensions.showMessage
+import java.util.UUID
+import kotlin.random.Random
 
 /**
  *  Created by Nurlibay Koshkinbaev on 07/02/2023 15:41
@@ -61,13 +65,13 @@ class CardsScreen : Fragment(R.layout.screen_cards) {
                     }
                     is UiState.Success -> {
                         loading(false)
-                        val cards = mutableListOf<String>()
+                        val cards = mutableListOf(Card(UUID.randomUUID().toString(), "All"))
                         it.data.forEach { card ->
-                            cards.add(card.name)
+                            cards.add(card)
                         }
-                        binding.viewPager.adapter = CardsViewPagerAdapter(requireActivity(), it.data)
+                        binding.viewPager.adapter = CardsViewPagerAdapter(requireActivity(), cards)
                         TabLayoutMediator(binding.tabLayout, binding.viewPager) { tab, pos ->
-                            tab.text = it.data[pos].name
+                            tab.text = cards[pos].name
                         }.attach()
                     }
                     else -> {

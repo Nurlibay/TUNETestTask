@@ -166,6 +166,7 @@
         android:backgroundTint="@color/link_color"
         android:text="@string/tv_continue"
         android:textAllCaps="false"
+        android:enabled="false"
         android:textSize="18sp"
         app:cornerRadius="12dp"
         app:layout_constraintBottom_toBottomOf="parent"

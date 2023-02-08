@@ -47,4 +47,31 @@ class CardViewModel @Inject constructor(
             }
         }
     }
+
+    private val _allCard = MutableStateFlow<UiState<List<CardDetail>>>(UiState.Empty)
+    val allCards: StateFlow<UiState<List<CardDetail>>> = _allCard
+
+    fun getAllCardsData(cardNames: ArrayList<String>) {
+        if (!hasConnection()) {
+            _allCard.value = UiState.NetworkError("No Internet Connection!")
+            return
+        }
+        viewModelScope.launch {
+            _allCard.value = UiState.Loading
+            mainRepository.getAllCardsData(cardNames).collect {
+                when (it) {
+                    is UiState.Success -> {
+                        val result = it.data
+                        _allCard.value = UiState.Success(result)
+                    }
+                    is UiState.Error -> {
+                        _allCard.value = UiState.Error(it.msg)
+                    }
+                    else -> {
+                        _allCard.value = UiState.Error("Unknown Error")
+                    }
+                }
+            }
+        }
+    }
 }

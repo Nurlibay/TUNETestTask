@@ -98,4 +98,35 @@ class DataHelper(
     }.catch {
         emit(UiState.Error(it.toString()))
     }.flowOn(Dispatchers.IO)
+
+    fun getAllCardData(cardNames: ArrayList<String>): Flow<UiState<List<CardDetail>>> = callbackFlow {
+        if (hasConnection()) {
+            db.collection(CARDS).get()
+                .addOnSuccessListener { querySnapshot ->
+                    val cards = mutableListOf<String>()
+                    cards.addAll(cardNames)
+                    cards.removeFirst()
+                    val allCardDetails = mutableListOf<CardDetail>()
+                    for (i in 0 until querySnapshot.documents.size) {
+                        db.collection(CARDS).document(querySnapshot.documents[i].id).collection(cards[i])
+                            .get()
+                            .addOnSuccessListener {
+                                val list = it.documents.map { doc ->
+                                    doc.toObject(CardDetail::class.java)!!
+                                }
+                                allCardDetails.addAll(list)
+                            }
+                            .addOnFailureListener {
+                                trySend(UiState.Error(it.localizedMessage!!.toString()))
+                            }
+                    }
+                    trySend(UiState.Success(allCardDetails))
+                }
+        } else {
+            trySend(UiState.NetworkError("No internet connection!"))
+        }
+        awaitClose { /* unregister listener here */ }
+    }.catch {
+        emit(UiState.Error(it.toString()))
+    }.flowOn(Dispatchers.IO)
 }

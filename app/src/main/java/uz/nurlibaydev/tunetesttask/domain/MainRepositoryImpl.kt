@@ -21,6 +21,10 @@ class MainRepositoryImpl @Inject constructor(
         return dataHelper.getCardList(id, name)
     }
 
+    override fun getAllCardsData(cardName: ArrayList<String>): Flow<UiState<List<CardDetail>>> {
+        return dataHelper.getAllCardData(cardName)
+    }
+
     override fun addCard(name: String, cardNumber: String, date: String): Flow<UiState<String>> {
         return dataHelper.addCard(name, cardNumber, date)
     }
